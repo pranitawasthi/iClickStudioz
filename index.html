@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iclick</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+<!-- <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Quintessential&family=Share+Tech&display=swap" rel="stylesheet"> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Quintessential&family=Share+Tech&display=swap" rel="stylesheet">
+
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const box = document.querySelector(".box");
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    box.classList.add("show"); // Add animation class
+                }
+            });
+        },
+        { threshold: 0.5 } // Triggers when 50% of the element is visible
+    );
+
+    observer.observe(box);
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const box = document.querySelector(".box");
+
+    function checkScroll() {
+        const boxPosition = box.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (boxPosition < windowHeight * 0.9) {
+            box.classList.add("show");
+        }
+    }
+
+    window.addEventListener("scroll", checkScroll);
+    checkScroll(); // Initial check in case it's already in view
+});
+
+</script>
+
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const box = document.querySelector(".box");
+    const images = document.querySelectorAll(".imgs");
+
+    function checkScroll() {
+        const boxPosition = box.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (boxPosition < windowHeight * 0.9) {
+            box.classList.add("show");
+            images.forEach((img, index) => {
+                setTimeout(() => {
+                    img.classList.add("show");
+                }, index * 200); // Staggered animation for images
+            });
+        }
+    }
+
+    window.addEventListener("scroll", checkScroll);
+    checkScroll(); // Initial check
+});
+
+</script> -->
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+            const box = document.querySelector('.box');
+            const images = document.querySelectorAll('.imgs');
+
+            setTimeout(() => box.classList.add('show'), 300);
+
+            images.forEach((img, index) => {
+                setTimeout(() => img.classList.add('show'), 500 + index * 200);
+            });
+        });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Elements
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const sideNav = document.querySelector('.side-nav');
+    const closeBtn = document.querySelector('.close-btn');
+    const overlay = document.querySelector('.overlay');
+    const body = document.body;
+    
+    // Open menu when hamburger is clicked
+    hamburgerMenu.addEventListener('click', function() {
+        sideNav.classList.add('open');
+        hamburgerMenu.classList.add('hamburger-active');
+        overlay.classList.add('active');
+        body.classList.add('menu-open');
+    });
+    
+    // Close menu functions
+    function closeMenu() {
+        sideNav.classList.remove('open');
+        hamburgerMenu.classList.remove('hamburger-active');
+        overlay.classList.remove('active');
+        body.classList.remove('menu-open');
+    }
+    
+    // Close menu when X is clicked
+    closeBtn.addEventListener('click', closeMenu);
+    
+    // Close menu when overlay is clicked
+    overlay.addEventListener('click', closeMenu);
+    
+    // Close menu when clicking a nav link
+    const navLinks = document.querySelectorAll('.side-nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+    
+    // Close menu when window is resized to desktop size
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && sideNav.classList.contains('open')) {
+            closeMenu();
+        }
+    });
+});
+</script>
+<body>
+
+
+    <div class="bod1">
+
+        <!-- <div class="navbar">
+            <div class="logo"><img class="logo" src="logo2.png" alt=""></div>
+            <div class="tabs">
+                <ul>
+                 <a href="./in.html"><li>Photography</li></a>   
+                   <a href="./films.html"><li>Films</li></a> 
+                    <li>About us</li>
+                    <a href="./cont.html"><li>Contact us</li></a> 
+                </ul>
+            </div>
+            
+        </div> -->
+
+        <div class="navbar">
+            <div class="logo"><img class="logo" src="logo2.png" alt=""></div>
+            
+            <!-- Hamburger button for mobile -->
+            <div class="hamburger-menu">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+            
+            <!-- Regular desktop navigation -->
+            <div class="tabs desktop-nav">
+                <ul>
+                    <a href="./in.html"><li>Photography</li></a>   
+                    <a href="./films.html"><li>Films</li></a> 
+                    <a href="./cont.html"><li>Contact us</li></a> 
+                </ul>
+            </div>
+            
+            <!-- Mobile side navigation panel -->
+            <div class="side-nav">
+                <div class="close-btn">&times;</div>
+                <ul>
+                    <a href="./in.html"><li>Photography</li></a>   
+                    <a href="./films.html"><li>Films</li></a> 
+                    <a href="./cont.html"><li>Contact us</li></a> 
+                </ul>
+            </div>
+            
+            <!-- Overlay for when side navigation is open -->
+            <div class="overlay"></div>
+        </div>
+
+    </div>
+
+    <!-- <div class="bod2">
+
+        <div class="box">
+            "Blending contemporary artistry with timeless traditions....." 
+            
+            
+
+        </div>
+        <div class="photos">
+            <img class="imgs" src="img1.jpeg" alt=""> 
+            <img class="imgs" src="img2.jpeg" alt="">
+            <img class="imgs" src="img3.jpeg" alt="">
+            <img class="imgs" src="img4.jpeg" alt="">
+    
+            
+
+        </div>
+            
+
+
+        
+            
+
+    </div> -->
+    <div class="bod2">
+        <div class="box">"Blending contemporary artistry with timeless traditions..."</div>
+        
+        <div class="photos">
+            <img class="imgs" src="img4.jpeg" alt="">
+            <img class="imgs" src="WhatsApp Image 2025-02-15 at 2.17.50 AM.jpeg" alt="">
+            <img class="imgs" src="WhatsApp Image 2025-02-15 at 2.17.50 AM.jpeg" alt="">
+            <!-- <img class="imgs" src="img1.jpeg" alt="">  -->
+            <img src="img7.jpeg" class="imgs" alt="">
+            <img class="imgs" src="img2.jpeg" alt="">
+            <img class="imgs" src="img3.jpeg" alt="">
+            <img class="imgs" src="img8.jpeg" alt="">
+            <img class="imgs" src="img9.jpeg" alt="">
+            <img class="imgs" src="img10.jpeg" alt="">
+            <img class="imgs" src="img12.jpeg" alt="">
+            <img class="imgs" src="pic1.jpg" alt="">
+            <img class="imgs" src="picss.jpeg" alt="">
+            <img class="imgs" src="img1.jpeg" alt="">
+            <img class="imgs" src="pict.jpg" alt="">
+            <img class="imgs" src="pict.jpg" alt="">
+            <img class="imgs" src="pict.jpg" alt="">
+            <img class="imgs" src="pict.jpg" alt="">
+            <img class="imgs" src="pict.jpg" alt="">
+            <!-- <img class="imgs" src="img11.jpeg" alt=""> -->
+            
+           
+
+        </div>
+    </div>
+
+    <div class="bod3">
+       <h1>
+
+        Who We Are???
+
+       </h1> 
+We are Kamakshi & Harrshit—a husband-and-wife team with a shared passion for storytelling and celebrating life’s most meaningful moments. Together, we run IClickStudiOZ, a boutique destination wedding photography and filmmaking firm based in the vibrant city of Jodhpur, India.
+
+At IClickStudiOZ, we believe that your wedding is not just an event—it’s the beginning of a legacy. Our mission is to preserve the beauty, emotions, and unforgettable moments of your big day through heartfelt and timeless photography and films. We feel truly honored to be a part of such significant milestones and are grateful to the couples who trust us with their stories.
+
+Our Style and Approach
+For us, the magic of weddings lies in the authenticity of real, unscripted moments. From joyful tears to spontaneous laughter, we specialize in capturing the emotions that make every wedding unique. Our style is a blend of photojournalism, artistic portraiture, and documentary filmmaking, all infused with our creative vision and attention to detail.
+
+Our approach is subtle and unobtrusive, allowing the day to unfold naturally while we capture its essence with honesty and care. With Kamakshi by the bride’s side and Harrshit with the groom, we ensure every parallel narrative is beautifully documented, creating a complete and cohesive story.
+
+At IClickStudiOZ, we don’t just create pictures or films—we craft heirlooms that reflect who you are and preserve the magic of your story for generations. When your family looks back on these memories, we want them to feel the joy, love, and excitement of your wedding as if they were right there with you.
+    </div>
+
+    <div class="loopvid">
+        <video loop autoplay muted>
+
+            <source src="vids.mp4" >
+        </video>
+    </div>
+    
+
+
+    <!-- <div class="appreciation">
+        <h1>Words of Appreciation</h1>
+        
+        <div class="message">
+            <p>Hey Harshit! I’ve watched the video and it’s EXCEPTIONAL.... Who says good things take time????? You gave the best of your services before time.. Really bhai... would never be able to show my gratitude enough as compared to the amazing work you and your team have done. 
+            I’m struggling to find exact words to describe my feelings right now. The video bought me tears into my eyes and it felt like I was reliving my D-DAY again as you captured every moment PERFECTLY. You made it all worthy. Thank you so much bhai.. And yesss you’re already reserved for my brother’s wedding this November.. ❤️❤️❤️</p>
+            <p class="author">— A Happy Client</p>
+        </div>
+    
+        <div class="message">
+            <p>Thank you Harshit. Got the hard disk delivered.  
+            You guys are Incredible.  
+            Absolutely brilliant stuff...words cannot do justice to describe your work.  
+            In love with you guys❤️  
+            What makes the experience even better is that your entire team is so humble and approachable.😘😘😘  
+            You guys are truly magicians.  
+            P.S. cannot wait for the Album and Videos🌟</p>
+            <p class="author">— Another Happy Client</p>
+        </div>
+    
+        <div class="message">
+            <p>Dear Harshit and the entire team of IClickStudiOZ,  
+            I cannot thank you guys enough for all the efforts you took to capture my big day and most importantly for taking my wedding project at the last moment, even when your schedule was already super tight.😘😘  
+            Cannot wait to see the pictures. But, just wanted to tell you guys that YOU ARE AWESOME 👍🏻👍🏻  
+            Thank you from the bottom of my heart ❤️</p>
+            <p class="author">— A Grateful Bride</p>
+        </div>
+    </div> -->
+    <div class="bod4">
+        <h1>Words of Appreciation</h1>
+        <div class="appreciation-cards">
+            <div class="card">
+                <p>
+                    <strong>Hey Harshit!</strong> I’ve watched the video and it’s <strong>EXCEPTIONAL</strong>.... Who says good things take time????? You gave the best of your services before time.. Really bhai... would never be able to show my gratitude enough as compared to the amazing work you and your team have done. 
+                    I’m struggling to find exact words to describe my feelings right now. The video bought me tears into my eyes and it felt like I was reliving my D-DAY again as you captured every moment <strong>PERFECTLY</strong>. You made it all worthy. Thankyou so much bhai.. And yesss you’re already reserved for my brother’s wedding this November.. ❤️❤️❤️
+                    <br><br>
+                    P.S. watching the video right now for the 12th time (to be precise 😛😛)
+                    <br>
+                    Love you guys.... bless you..😘😘
+                </p>
+            </div>
+            <div class="card">
+                <p>
+                    <strong>Thankyou Harrshit.</strong> Got the hard disk delivered. You guys are <strong>Incredible</strong>. Absolutely brilliant stuff...words cannot do justice to describe your work. 
+                    In love with you guys❤️ What makes the experience even better is that your entire team is so humble and approachable.😘😘😘
+                    You guys are truly magicians.
+                    <br><br>
+                    P.S. cannot wait for the Album and Videos🌟
+                </p>
+            </div>
+            <div class="card">
+                <p>
+                    <strong>Dear Harrshit and entire team of IClickStudiOZ,</strong> I cannot Thankyou guys enough for all the efforts you guys took to capture my big day and most importantly for taking my wedding project at the end moment and that too during the time when your schedule was already super tight.😘😘
+                    Cannot wait to see the pictures. But, just wanted to tell you guys that <strong>YOU ARE AWESOME</strong> 👍🏻👍🏻
+                    <br><br>
+                    Thankyou from the bottomest of my heart❤️
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Social Media Icons -->
+            <div class="social-media">
+                <a href="https://www.instagram.com/yourusername" target="_blank">
+                    <img src="icons8-instagram-50.png" alt="Instagram">
+                </a>
+                <a href="https://www.youtube.com/yourchannel" target="_blank">
+                    <img src="icons8-youtube-50.png" alt="YouTube">
+                </a>
+                <a href="https://www.facebook.com/yourpage" target="_blank">
+                    <img src="icons8-facebook-50.png    " alt="Facebook">
+                </a>
+                <a href="https://twitter.com/yourhandle" target="_blank">
+                    <img src="icons8-x-50.png" alt="Twitter">
+                </a>
+            </div>
+    
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <p>Phone: <a href="tel:+1234567890">+123 456 7890</a></p>
+                <p>Email: <a href="mailto:info@iclickstudioz.com">info@iclickstudioz.com</a></p>
+                <p>Address: 123 Wedding Lane, Jodhpur, Rajasthan, India</p>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <!-- <div class="copyright">
+            <p>&copy; 2023 IClickStudiOZ. All rights reserved.</p>
+        </div> -->
+    </footer>
+
+    
+
+
+    
+
+    
+
+
+    
+
+    
+</body>
+</html>

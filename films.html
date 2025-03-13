@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iClick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Quintessential&family=Share+Tech&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #a3a3a3;
+            font-family: "Quintessential", serif;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            height: 15vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Trebuchet MS', sans-serif;
+            color: black;
+            padding: 0 2vw;
+            position: relative;
+        }
+        
+        .logo img {
+            height: 12vh;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: flex-end;
+            flex: 1;
+        }
+        
+        ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        li {
+            margin-right: 5rem;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+            z-index: 1000;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+        
+        .bar1, .bar2, .bar3 {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+        
+        /* Hamburger animation when active */
+        .hamburger-active .bar1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger-active .bar2 {
+            opacity: 0;
+        }
+        
+        .hamburger-active .bar3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Side Navigation */
+        .side-nav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1001;
+            top: 0;
+            right: 0;
+            background-color: #fff;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+        }
+        
+        .side-nav.open {
+            width: 250px;
+        }
+        
+        .side-nav ul {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        
+        .side-nav ul a {
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .side-nav li {
+            padding: 15px 25px;
+            margin: 0;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .side-nav li:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+        }
+        
+        /* Overlay when side nav is open */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5vh 2vw;
+            text-align: center;
+            min-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        .title {
+            font-size: 3rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            line-height: 1.4;
+            color: #333;
+            padding: 3vh 5vw;
+            border-bottom: 2px solid #555;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+            margin-bottom: 20px;
+        }
+        
+        .title.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 15px;
+        }
+        
+        .gallery iframe {
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        
+        .gallery iframe.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            li {
+                margin-right: 3rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            li {
+                margin-right: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .hamburger-menu {
+                display: block;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                align-items: flex-start;
+            }
+            
+            .logo img {
+                height: 8vh;
+            }
+            
+            .title {
+                font-size: 2rem;
+                padding: 2vh 3vw;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            /* Prevent scrolling when menu is open */
+            body.menu-open {
+                overflow: hidden;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .title {
+                font-size: 1.5rem;
+                padding: 1.5vh 2vw;
+            }
+            
+            .gallery iframe {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo"><a href="./index.html"><img src="logo2.png" alt="Logo"></a></div>
+        
+        <!-- Hamburger button for mobile -->
+        <div class="hamburger-menu">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+        
+        <!-- Regular desktop navigation -->
+        <div class="tabs desktop-nav">
+            <ul>
+                <a href="./in.html"><li>Photography</li></a>   
+                <a href="./films.html"><li>Films</li></a> 
+                <a href="./cont.html"><li>Contact us</li></a> 
+            </ul>
+        </div>
+        
+        <!-- Mobile side navigation panel -->
+        <div class="side-nav">
+            <div class="close-btn">&times;</div>
+            <ul>
+                <a href="./in.html"><li>Photography</li></a>   
+                <a href="./films.html"><li>Films</li></a> 
+                <a href="./cont.html"><li>Contact us</li></a> 
+            </ul>
+        </div>
+        
+        <!-- Overlay for when side navigation is open -->
+        <div class="overlay"></div>
+    </div>
+    
+    <div class="container">
+        <div class="title">Checkout Our Videos...</div>
+        <div class="gallery">
+            <iframe src="https://www.youtube.com/embed/cUR4V3HSeVY?si=otr5KqTR6p1fS3oa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/fAN0uqUhAL0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/OPzWxWP0M_Q?si=zAq93SkYmFICJyQG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/O85FfgaUkfk?si=nLHM3oZvmbAEm9Ie" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/nCoQAaCEHvc?si=_h_moJEvzIePozCU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const title = document.querySelector('.title');
+            const videos = document.querySelectorAll('.gallery iframe');
+
+            setTimeout(() => title.classList.add('show'), 300);
+
+            videos.forEach((video, index) => {
+                setTimeout(() => video.classList.add('show'), 500 + index * 150);
+            });
+            
+            // Hamburger menu functionality
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const sideNav = document.querySelector('.side-nav');
+            const overlay = document.querySelector('.overlay');
+            const closeBtn = document.querySelector('.close-btn');
+            const body = document.body;
+
+            // Toggle hamburger menu
+            hamburgerMenu.addEventListener('click', () => {
+                hamburgerMenu.classList.toggle('hamburger-active');
+                sideNav.classList.toggle('open');
+                overlay.classList.toggle('active');
+                body.classList.toggle('menu-open');
+            });
+
+            // Close side nav when clicking close button
+            closeBtn.addEventListener('click', () => {
+                hamburgerMenu.classList.remove('hamburger-active');
+                sideNav.classList.remove('open');
+                overlay.classList.remove('active');
+                body.classList.remove('menu-open');
+            });
+
+            // Close side nav when clicking overlay
+            overlay.addEventListener('click', () => {
+                hamburgerMenu.classList.remove('hamburger-active');
+                sideNav.classList.remove('open');
+                overlay.classList.remove('active');
+                body.classList.remove('menu-open');
+            });
+            
+        });
+    </script>
+</body>
+</html>

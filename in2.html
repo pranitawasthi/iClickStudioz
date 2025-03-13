@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iClick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Quintessential&family=Share+Tech&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #a3a3a3;
+            font-family: "Quintessential", serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            height: 15dvh;
+            display: flex;
+            align-items: center;
+            font-family: 'Trebuchet MS', sans-serif;
+            color: black;
+            padding: 0 2vw;
+        }
+        .logo img {
+            height: 12vh;
+
+        }
+        .tabs {
+            display: flex;
+            justify-content: end;
+            flex: 1;
+        }
+        ul {
+            list-style: none;
+            display: flex;
+        }
+        li {
+            margin-right: 5rem;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5vh 2vw;
+            text-align: center;
+        }
+        .title {
+            font-size: 3rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Album Covers */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .cover {
+    width: 100%;
+    max-width: 250px; /* Adjust as needed */
+    height: auto;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+        }
+
+         .cover:hover {
+    transform: scale(1.05);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            width: 80%;
+            max-width: 900px;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Collage Grid */
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .modal-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .modal-gallery img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo"><a href="./index.html"><img src="logo2.png" alt="Logo"></a></div>
+        <div class="tabs">
+            <ul>
+                <a href="./in.html"><li>Photography</li></a>   
+                <a href="#"><li>Films</li></a> 
+                <a href="./cont.html"><li>Contact us</li></a> 
+            </ul>
+        </div>
+    </div>
+
+    <!-- Album Section -->
+    <div class="container">
+        <div class="title">Checkout Our Albums...</div>
+        <div class="gallery">
+            <img src="./iclick pics/wedding/anjali&shivam/cover.jpg" alt="Anjali & Shivam" class="cover" data-couple="couple1">
+            <img src="./iclick pics/wedding/ayush&ayushi/cover.jpg" alt="Ayush & Ayushi" class="cover" data-couple="couple2">
+            <img src="./iclick pics/wedding/deepak&nikita/coverphoto.jpg" alt="Deepak & Nikita" class="cover" data-couple="couple3">
+            <img src="./iclick pics/wedding/aishwarya&shrinivas/cover.JPG" alt="Aishwarya & Shrinivas" class="cover" data-couple="couple4">
+            <img src="./iclick pics/wedding/vaagmi&gagan/coverphoto.jpg" alt="Vaagmi & Gagan" class="cover" data-couple="couple5">
+        </div>
+    </div>
+
+    <!-- Modal for Album -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-title"></div>
+            <div class="modal-gallery"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("modal");
+            const modalGallery = document.querySelector(".modal-gallery");
+            const modalTitle = document.querySelector(".modal-title");
+            const closeModal = document.querySelector(".close");
+
+            // Album Data
+            const albums = {
+                couple1: {
+            name: "Anjali & Shivam",
+            images: [
+                "./iclick pics/wedding/anjali&shivam/DSC00182.jpg",
+                "iclick pics/wedding/anjali&shivam/DSC00188.jpg",
+                "iclick pics/wedding/anjali&shivam/DSC00205.jpg",
+                "iclick pics/wedding/anjali&shivam/DSC00238.jpg",
+                "iclick pics/wedding/anjali&shivam/DSC00449.jpg",
+                "iclick pics/wedding/anjali&shivam/DSC02220.jpg",
+                "iclick pics/wedding/anjali&shivam/DSC02252.jpg",
+                "iclick pics/wedding/anjali&shivam/DSC02584.jpg",
+                "iclick pics/wedding/anjali&shivam/DTIC7998.jpg",
+                "iclick pics/wedding/anjali&shivam/DTIC8007.jpg",
+                "iclick pics/wedding/anjali&shivam/RVI05616.jpg",
+                "iclick pics/wedding/anjali&shivam/RVI05620.jpg",
+                "iclick pics/wedding/anjali&shivam/RVI05746.jpg"
+
+            ]
+        },
+        couple2: {
+            name: "Ayush & Ayushi",
+            images: [
+                "iclick pics/wedding/ayush&ayushi/IC 01 (14).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (15).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (19).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (61).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (67).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (68).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (73).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (78).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (84).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (87).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (88).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (90).jpg",
+                "iclick pics/wedding/ayush&ayushi/IC 01 (93).jpg",
+
+                      
+            ]
+        },
+        couple3: {
+            name: "Deepak & Nikita",
+            images: [
+               "iclick pics/wedding/deepak&nikita/DTIC2085.jpg",
+               "iclick pics/wedding/deepak&nikita/DTIC2353.jpg",
+               "iclick pics/wedding/deepak&nikita/DTIC2431.jpg",
+               "iclick pics/wedding/deepak&nikita/DTIC2442.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF60411.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF60419.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF60427.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF60456.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF60457.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF67781.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF67853.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF67937.jpg",
+               "iclick pics/wedding/deepak&nikita/TVF68575.jpg",
+
+            ]
+        },
+        couple4: {
+            name: "Aishwarya & Shrinivas",
+            images: [
+                "iclick pics/wedding/aishwarya&shrinivas/DSC06353.jpg",
+                "iclick pics/wedding/aishwarya&shrinivas/DSC06376.jpg",
+                "iclick pics/wedding/aishwarya&shrinivas/IMG_5322.JPG",
+                "iclick pics/wedding/aishwarya&shrinivas/IMG_5404.JPG",
+                "iclick pics/wedding/aishwarya&shrinivas/IMG_5442.JPG",
+                "iclick pics/wedding/aishwarya&shrinivas/TVF65604.jpg",
+                "iclick pics/wedding/aishwarya&shrinivas/TVF65618.jpg",
+                "iclick pics/wedding/aishwarya&shrinivas/TVF65658.jpg",
+                "iclick pics/wedding/aishwarya&shrinivas/TVF65792.jpg"
+            ]
+        },
+        couple5: {
+            name: "Vaagmi & Gagan",
+            images: [
+                "iclick pics/wedding/vaagmi&gagan/3L2A2796.jpg",
+                "iclick pics/wedding/vaagmi&gagan/3L2A3154.jpg",
+                "iclick pics/wedding/vaagmi&gagan/DTIC2272.jpg",
+                "iclick pics/wedding/vaagmi&gagan/DTIC2287.jpg",
+                "iclick pics/wedding/vaagmi&gagan/IC 01 (62).jpg",
+                "iclick pics/wedding/vaagmi&gagan/IC 01 (68).jpg",
+                "iclick pics/wedding/vaagmi&gagan/IC 01 (88).jpg",
+                "iclick pics/wedding/vaagmi&gagan/IC 01 (104).jpg",
+                "iclick pics/wedding/vaagmi&gagan/IC 01 (175).jpg",
+                "iclick pics/wedding/vaagmi&gagan/IC 01 (187).jpg",
+                "iclick pics/wedding/vaagmi&gagan/IC HALDI (19).jpg",
+                "iclick pics/wedding/vaagmi&gagan/IC HALDI (24).jpg",
+            ]
+        }
+            };
+
+            // Open Modal
+            document.querySelectorAll(".cover").forEach(cover => {
+                cover.addEventListener("click", function () {
+                    const couple = this.dataset.couple;
+                    if (albums[couple]) {
+                        modalTitle.innerText = albums[couple].name;
+                        modalGallery.innerHTML = albums[couple].images.map(img => `<img src="${img}" alt="Photo">`).join("");
+                        modal.style.display = "flex";
+                    }
+                });
+            });
+
+            // Close Modal
+            closeModal.addEventListener("click", () => modal.style.display = "none");
+            modal.addEventListener("click", (e) => { if (e.target === modal) modal.style.display = "none"; });
+        });
+    </script>
+</body>
+</html>

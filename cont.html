@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iClick - Contact Us</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Quintessential&family=Share+Tech&display=swap" rel="stylesheet">
+    <style>
+        /* General body styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Quintessential", serif;
+            background-color: #a3a3a3;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            height: 15vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Trebuchet MS', sans-serif;
+            color: black;
+            padding: 0 2vw;
+            position: relative;
+        }
+        
+        .logo img {
+            height: 12vh;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: flex-end;
+            flex: 1;
+        }
+        
+        ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        li {
+            margin-right: 5rem;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+            z-index: 1000;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+        
+        .bar1, .bar2, .bar3 {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+        
+        /* Hamburger animation when active */
+        .hamburger-active .bar1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger-active .bar2 {
+            opacity: 0;
+        }
+        
+        .hamburger-active .bar3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Side Navigation */
+        .side-nav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1001;
+            top: 0;
+            right: 0;
+            background-color: #fff;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+        }
+        
+        .side-nav.open {
+            width: 250px;
+        }
+        
+        .side-nav ul {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        
+        .side-nav ul a {
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .side-nav li {
+            padding: 15px 25px;
+            margin: 0;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .side-nav li:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+        }
+        
+        /* Overlay when side nav is open */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+
+        /* Form container styling */
+        #eventForm {
+            background-color: #e0e0e0;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            margin: 30px auto 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Form title */
+        .form-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Label styling */
+        #eventForm label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        /* Input field styling */
+        #eventForm input[type="text"],
+        #eventForm input[type="email"],
+        #eventForm input[type="date"],
+        #eventForm input[type="time"],
+        #eventForm textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        /* Radio button container */
+        #eventForm .radio-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Radio button styling */
+        #eventForm .radio-group label {
+            margin-right: 15px;
+            font-weight: normal;
+            color: #555;
+            display: inline-block;
+        }
+
+        /* Button styling */
+        #eventForm button {
+            background-color: #555;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            width: auto;
+            min-width: 180px;
+        }
+
+        #eventForm button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+
+        /* Focus styling */
+        #eventForm input:focus,
+        #eventForm textarea:focus {
+            outline: none;
+            border-color: #777;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        /* Success message */
+        .success-message {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Error message */
+        .error-message {
+            background-color: #f2dede;
+            color: #a94442;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            li {
+                margin-right: 3rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            li {
+                margin-right: 2rem;
+            }
+            
+            #eventForm {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .hamburger-menu {
+                display: block;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                align-items: flex-start;
+            }
+            
+            .logo img {
+                height: 8vh;
+            }
+            
+            #eventForm {
+                width: 95%;
+                padding: 20px;
+                margin: 20px auto 40px;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+            
+            #eventForm label {
+                font-size: 0.9rem;
+            }
+            
+            #eventForm input[type="text"],
+            #eventForm input[type="email"],
+            #eventForm input[type="date"],
+            #eventForm input[type="time"],
+            #eventForm textarea {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            #eventForm button {
+                padding: 10px 20px;
+                font-size: 14px;
+                min-width: 150px;
+            }
+            
+            /* Prevent scrolling when menu is open */
+            body.menu-open {
+                overflow: hidden;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            #eventForm {
+                padding: 15px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .radio-group label {
+                margin-bottom: 5px;
+            }
+            
+            #eventForm button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo"><a href="./index.html"><img src="logo2.png" alt="Logo"></a></div>
+        
+        <!-- Hamburger button for mobile -->
+        <div class="hamburger-menu">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+        
+        <!-- Regular desktop navigation -->
+        <div class="tabs desktop-nav">
+            <ul>
+                <a href="./in.html"><li>Photography</li></a>   
+                <a href="./films.html"><li>Films</li></a>
+                <a href="./cont.html"><li>Contact us</li></a> 
+            </ul>
+        </div>
+        
+        <!-- Mobile side navigation panel -->
+        <div class="side-nav">
+            <div class="close-btn">&times;</div>
+            <ul>
+                <a href="./in.html"><li>Photography</li></a>   
+                <a href="./films.html"><li>Films</li></a>
+                <a href="./cont.html"><li>Contact us</li></a> 
+            </ul>
+        </div>
+        
+        <!-- Overlay for when side navigation is open -->
+        <div class="overlay"></div>
+    </div>
+
+    <!-- <form id="eventForm">
+        <div class="form-title">Schedule Your Event</div>
+        
+        <label for="first-name">First Name *</label>
+        <input type="text" id="first-name" name="first-name" required placeholder="Enter your first name">
+
+        <label for="last-name">Last Name *</label>
+        <input type="text" id="last-name" name="last-name" required placeholder="Enter your last name">
+
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+        <label>Location *</label>
+        <div class="radio-group">
+            <input type="radio" id="phone" name="location" value="Phone call" required>
+            <label for="phone">Phone Call</label>
+            <input type="radio" id="somewhere-else" name="location" value="Somewhere else">
+            <label for="somewhere-else">Somewhere Else</label>
+        </div>
+
+        <label for="date">Date *</label>
+        <input type="date" name="date" id="date" required>
+
+        <label for="time">Time *</label>
+        <input type="time" name="time" id="time" required>
+
+        <label for="venue">When is the big day? And what's the venue?</label>
+        <textarea id="venue" name="venue" required placeholder="Enter venue details" rows="3"></textarea>
+
+        <label for="theme">Do you have a theme in mind?</label>
+        <textarea id="theme" name="theme" required placeholder="Describe your theme" rows="3"></textarea>
+
+        <label for="vibe">What's the vibe you're going for?</label>
+        <input type="text" id="vibe" name="vibe" required placeholder="Describe the vibe">
+
+        <button type="submit">Schedule Event</button>
+        
+        <div class="success-message">Event details sent successfully!</div>
+        <div class="error-message">Failed to send details. Please try again.</div>
+    </form> -->
+
+    <form id="eventForm">
+        <div class="form-title">Schedule Your Event</div>
+        
+        <label for="first-name">First Name *</label>
+        <input type="text" id="first-name" name="first-name" required placeholder="Enter your first name">
+    
+        <label for="last-name">Last Name *</label>
+        <input type="text" id="last-name" name="last-name" required placeholder="Enter your last name">
+    
+        <label for="bride-groom">Bride & Groom Names *</label>
+        <input type="text" id="bride-groom" name="bride-groom" required placeholder="Enter bride and groom names">
+    
+        <label for="mobile">Mobile Number *</label>
+        <input type="text" id="mobile" name="mobile" required placeholder="Enter your mobile number">
+    
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
+    
+        <label>Event Type *</label>
+        <div class="radio-group">
+            <input type="radio" id="wedding" name="event-type" value="Wedding" required>
+            <label for="wedding">Wedding</label>
+            <input type="radio" id="pre-wedding" name="event-type" value="Pre-wedding">
+            <label for="pre-wedding">Pre-wedding</label>
+        </div>
+    
+        <label for="days">Number of Days/Functions *</label>
+        <input type="text" id="days" name="days" required placeholder="Enter number of days/functions">
+    
+        <label for="location">Location/Venue *</label>
+        <input type="text" id="location" name="location" required placeholder="Enter the location/venue">
+    
+        <label for="date">Date *</label>
+        <input type="date" name="date" id="date" required>
+    
+        <label for="time">Time *</label>
+        <input type="time" name="time" id="time" required>
+    
+        <label for="story">Tell Us Your Story / What You Want</label>
+        <textarea id="story" name="story" placeholder="Share your story or what you're looking for" rows="3"></textarea>
+    
+        <label for="queries">Other Queries</label>
+        <textarea id="queries" name="queries" placeholder="Any other questions or requests?" rows="3"></textarea>
+    
+        <button type="submit">Schedule Event</button>
+        
+        <div class="success-message">Event details sent successfully!</div>
+        <div class="error-message">Failed to send details. Please try again.</div>
+    </form>
+
+
+    <!-- <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Form submission
+            const eventForm = document.getElementById('eventForm');
+            const successMessage = document.querySelector('.success-message');
+            const errorMessage = document.querySelector('.error-message');
+            
+            if (eventForm) {
+                eventForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+        
+                    const formData = new FormData(this);
+                    const message = `
+🔔 *Event Details* 🔔
+
+👤 *Name:* ${formData.get('first-name')} ${formData.get('last-name')}
+📧 *Email:* ${formData.get('email')}
+📍 *Location:* ${formData.get('location') || 'Not specified'}
+📅 *Date:* ${formData.get('date')}
+🕒 *Time:* ${formData.get('time')}
+🏢 *Venue:* ${formData.get('venue')}
+🎨 *Theme:* ${formData.get('theme')}
+💫 *Vibe:* ${formData.get('vibe')}
+`;
+        
+                    const apiURL = 'https://graph.facebook.com/v18.0/579653048564789/messages';
+                    const accessToken = 'EAAQky8pVyZBsBO9wVSvD9ZAwD5vdiKiCxZBX1JRhSFKroBaWHzeQ37ueloDPCEtmeUZBocZBu5YG9MbYpMBLFAQFTbdl6GBznyWmLMt8MFTqOBgGrwiZB6mL6NafTuZAeOD18rJ244yLFqKdR2CPlWgYHD6Jk14ty0MoZALFk3DozuWPmI6cvzHXeJXMxQaBLYD58GbuTAZCS5AHXrcUeAWsB4KUDLWIls2h4a5oZD';
+                    const receiverPhoneNumber = '917490049922';
+    
+                await fetch(apiURL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messaging_product: 'whatsapp',
+                        to: receiverPhoneNumber,
+                        type: 'text',
+                        text: { body: message }
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Event details sent successfully!');
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to send details. Please try again.');
+                }
+            });
+        }
+        </script> -->
+   
+        <!-- <script>
+            document.addEventListener("DOMContentLoaded", () => {
+    const eventForm = document.getElementById('eventForm');
+    
+    if (eventForm) {
+        eventForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const message = `
+🔔 *Event Details* 🔔
+
+👤 *Name:* ${formData.get('first-name') || 'Not provided'} ${formData.get('last-name') || ''}
+📧 *Email:* ${formData.get('email') || 'Not provided'}
+📍 *Location:* ${formData.get('location') || 'Not specified'}
+📅 *Date:* ${formData.get('date') || 'Not provided'}
+🕒 *Time:* ${formData.get('time') || 'Not provided'}
+🏢 *Venue:* ${formData.get('venue') || 'Not provided'}
+🎨 *Theme:* ${formData.get('theme') || 'Not provided'}
+💫 *Vibe:* ${formData.get('vibe') || 'Not provided'}
+`;
+
+            const apiURL = 'https://graph.facebook.com/v18.0/579653048564789/messages';
+            const accessToken = 'EAAQky8pVyZBsBO9wVSvD9ZAwD5vdiKiCxZBX1JRhSFKroBaWHzeQ37ueloDPCEtmeUZBocZBu5YG9MbYpMBLFAQFTbdl6GBznyWmLMt8MFTqOBgGrwiZB6mL6NafTuZAeOD18rJ244yLFqKdR2CPlWgYHD6Jk14ty0MoZALFk3DozuWPmI6cvzHXeJXMxQaBLYD58GbuTAZCS5AHXrcUeAWsB4KUDLWIls2h4a5oZD';
+            const receiverPhoneNumber = '917490049922';
+
+            try {
+                const response = await fetch(apiURL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messaging_product: 'whatsapp',
+                        to: receiverPhoneNumber,
+                        type: 'text',
+                        text: { body: message }
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Event details sent successfully!');
+                    console.log('Success:', data);
+                    eventForm.reset(); // Reset form after successful submission
+                } else {
+                    console.error('Error:', data);
+                    alert('Failed to send details. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to send details. Please try again.');
+            }
+        });
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Hamburger menu functionality
+    const hamburger = document.querySelector('.hamburger-menu');
+    const sideNav = document.querySelector('.side-nav');
+    const overlay = document.querySelector('.overlay');
+    const closeBtn = document.querySelector('.close-btn');
+    const body = document.body;
+    
+    // Open menu when hamburger is clicked
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('hamburger-active');
+        sideNav.classList.toggle('open');
+        overlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+    });
+    
+    // Close menu when close button is clicked
+    closeBtn.addEventListener('click', () => {
+        hamburger.classList.remove('hamburger-active');
+        sideNav.classList.remove('open');
+        overlay.classList.remove('active');
+        body.classList.remove('menu-open');
+    });
+    
+    // Close menu when overlay is clicked
+    overlay.addEventListener('click', () => {
+        hamburger.classList.remove('hamburger-active');
+        sideNav.classList.remove('open');
+        overlay.classList.remove('active');
+        body.classList.remove('menu-open');
+    });
+});
+
+        </script> -->
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+    // Hamburger menu functionality
+    const hamburger = document.querySelector('.hamburger-menu');
+    const sideNav = document.querySelector('.side-nav');
+    const overlay = document.querySelector('.overlay');
+    const closeBtn = document.querySelector('.close-btn');
+    const body = document.body;
+    
+    // Open menu when hamburger is clicked
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('hamburger-active');
+        sideNav.classList.toggle('open');
+        overlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+    });
+    
+    // Close menu when close button is clicked
+    closeBtn.addEventListener('click', () => {
+        hamburger.classList.remove('hamburger-active');
+        sideNav.classList.remove('open');
+        overlay.classList.remove('active');
+        body.classList.remove('menu-open');
+    });
+    
+    // Close menu when overlay is clicked
+    overlay.addEventListener('click', () => {
+        hamburger.classList.remove('hamburger-active');
+        sideNav.classList.remove('open');
+        overlay.classList.remove('active');
+        body.classList.remove('menu-open');
+    });
+
+    // Form submission
+    const eventForm = document.getElementById('eventForm');
+    
+    if (eventForm) {
+        eventForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const message = `
+🔔 *Event Details* 🔔
+
+👤 *Name:* ${formData.get('first-name') || 'Not provided'} ${formData.get('last-name') || ''}
+👰‍♀️🤵‍♂️ *Bride & Groom:* ${formData.get('bride-groom') || 'Not provided'}
+📱 *Mobile:* ${formData.get('mobile') || 'Not provided'}
+📧 *Email:* ${formData.get('email') || 'Not provided'}
+🎉 *Event Type:* ${formData.get('event-type') || 'Not specified'}
+📅 *Number of Days/Functions:* ${formData.get('days') || 'Not provided'}
+📍 *Location:* ${formData.get('location') || 'Not provided'}
+📆 *Date:* ${formData.get('date') || 'Not provided'}
+🕒 *Time:* ${formData.get('time') || 'Not provided'}
+📝 *Their Story:* ${formData.get('story') || 'Not provided'}
+❓ *Other Queries:* ${formData.get('queries') || 'None'}
+`;
+
+            const apiURL = 'https://graph.facebook.com/v18.0/579653048564789/messages';
+            const accessToken = 'EAAQky8pVyZBsBO2yTMbcAz3aTf8ZByFmTimwsaL69iNrs0ncpInQvJzcVItZCuDqab9nXMm1kHtRGBZA2Am1k1GFKVBmEqwZAlqGll5fUOhoZCScJdRH1MmFWU9ZAfoGuHmZCpvi64Xznnwm6d2ibfhddfplY9XXPvDUndB8miDu2idQaZCW5yNNIR7OLQxZAZBpaZB0iQ9iO7HAJSIAMeAYJ170bmKPu44Yxwkty6ohGuCF';
+            const receiverPhoneNumber = '919079656022';
+
+            try {
+                const response = await fetch(apiURL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messaging_product: 'whatsapp',
+                        to: receiverPhoneNumber,
+                        type: 'text',
+                        text: { body: message }
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Event details sent successfully!');
+                    console.log('Success:', data);
+                    eventForm.reset(); // Reset form after successful submission
+                } else {
+                    console.error('Error:', data);
+                    alert('Failed to send details. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to send details. Please try again.');
+            }
+        });
+    }
+});
+        </script>
+</body>
+</html> 
